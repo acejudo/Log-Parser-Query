@@ -3,13 +3,17 @@ Log Parser Query Examples
 
 ###  Group by Machine , IpServer , Uriname 
 ```
-logparser  "SELECT  c-ip As Machine, REVERSEDNS(c-ip) As ReverseDNS, s-ip as IpServer,   cs(Referer) as Uriname       COUNT(*) As Hits   into [nameLog].csv FROM [namelog].log  GROUP BY Machine , IpServer, Uriname ORDER BY Hits DESC" 
+logparser  "SELECT  c-ip As Machine, REVERSEDNS(c-ip) As ReverseDNS, s-ip as IpServer,   cs(Referer) as Uriname,       COUNT(*) As Hits   into [nameLog].csv FROM [namelog].log  GROUP BY Machine , IpServer, Uriname ORDER BY Hits DESC" 
 ```
 
 ###  Group by Machine , IpServer , Uriname. Several logs
 ```
-logparser  "SELECT  c-ip As Machine, REVERSEDNS(c-ip) As ReverseDNS , s-ip as IpServer,  cs(Referer) as Uriname     COUNT(*) As Hits   into 1611.csv FROM u_ex16110*.log  GROUP BY Machine , IpServer, Uriname ORDER BY Hits DESC"  
+logparser  "SELECT  c-ip As Machine, REVERSEDNS(c-ip) As ReverseDNS , s-ip as IpServer,  cs(Referer) as Uriname,     COUNT(*) As Hits   into 1611.csv FROM u_ex16110*.log  GROUP BY Machine , IpServer, Uriname ORDER BY Hits DESC"  
 ```
+
+###  Group by Machine , IpServer , Uriname. Several logs Select With date
+logparser  "SELECT  c-ip As Machine, REVERSEDNS(c-ip) As ReverseDNS , s-ip as IpServer,  cs(Referer) as Uriname,     COUNT(*) As Hits   into 1611.csv FROM u_ex16110*.log  where  TO_TIMESTAMP(date, time) > TIMESTAMP('2016-11-03 17:30', 'yyyy-MM-dd HH:mm')   GROUP BY Machine , IpServer, Uriname ORDER BY Hits DESC"  
+
 ###  Response 500 Several Logs
 ```
 logparser  "SELECT  date as Date,c-ip As Machine,    REVERSEDNS(c-ip) As ReverseDNS  , s-ip as IpServer,  cs(Referer) as Uriname , cs-uri-stem as UrlSend, cs-uri-query as Query into 1611.csv FROM u_ex16110*.log WHERE sc-status=500"  
