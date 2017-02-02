@@ -36,3 +36,8 @@ logparser "SELECT sc-status AS Status,COUNT(*) AS Hits INTO HITS.gif  FROM u_ex1
 ```
 logparser " SELECT   sc-win32-status As Win32-Status,WIN32_ERROR_DESCRIPTION(sc-win32-status) as Description,   COUNT(*) AS Hits      into ErrorCode.csv  FROM u_ex16110*.log WHERE Win32-Status<>0  GROUP BY Win32-Status  ORDER BY Win32-Status ASC" 
 ```
+
+### Request Web
+```
+logparser  "SELECT  TO_TIMESTAMP(date, time) as Date,sc-status,cs(User-Agent) as Browser, c-ip As Machine,    REVERSEDNS(c-ip) As ReverseDNS  , s-ip as IpServer,  cs(Referer) as Uriname , cs-uri-stem as UrlSend, cs-uri-query as Query into Logs.csv FROM u_ex17020*.log WHERE sc-status<>200 and sc-status<>304 and sc-status<>206 and sc-status<>204" 
+```
